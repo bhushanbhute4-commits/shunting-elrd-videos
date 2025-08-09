@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Railway Training Videos</title>
+  <style>
+    :root {
+      --primary: #005aa7;
+      --secondary: #00c6ff;
+      --bg: #f0f4f8;
+      --text: #333;
+      --btn-bg: #0078D7;
+      --btn-hover: #005fa3;
+    }
+
+    body.dark-mode {
+      --bg: #1e1e1e;
+      --text: #f0f0f0;
+      --btn-bg: #444;
+      --btn-hover: #666;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 15px 20px;
+      background-color: var(--bg);
+    }
+
+    .controls input {
+      padding: 10px;
+      font-size: 16px;
+      flex: 1;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .toggle-btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .index-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      gap: 10px;
+    }
+
+    .video-button {
+      background-color: var(--btn-bg);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 500px;
+      text-align: left;
+      transition: background-color 0.3s ease;
+    }
+
+    .video-button:hover {
+      background-color: var(--btn-hover);
+    }
+
+    iframe {
+      display: block;
+      margin: 30px auto;
+      width: 90%;
+      max-width: 800px;
+      height: 450px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 600px) {
+      .controls {
+        flex-direction: column;
+      }
+
+      .controls input {
+        margin-bottom: 10px;
+        margin-right: 0;
+      }
+
+      .video-button {
+        font-size: 18px;
+      }
+
+      iframe {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🚆 Railway Training Videos</h1>
+  </header>
+
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search videos..." oninput="filterButtons()" />
+    <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  </div>
+
+  <div class="index-container" id="buttonContainer">
+    <!-- Replace these with your actual video titles and file IDs -->
+    <button class="video-button" data-title="FREIGHT SHED TO MOH" onclick="playVideo('1vy8pvHYNHcYDYfZhSAm4MWDq1JDNVI5P')">FREIGHT SHED TO MOH</button>
+    <button class="video-button" data-title="Signal Operations" onclick="playVideo('2X3Y4Z5W6V7U8T9S0')">Signal Operations</button>
+    <button class="video-button" data-title="Locomotive Maintenance" onclick="playVideo('3M4N5O6P7Q8R9S0T1')">Locomotive Maintenance</button>
+    <button class="video-button" data-title="Station Management" onclick="playVideo('4A5B6C7D8E9F0G1H2')">Station Management</button>
+    <button class="video-button" data-title="Passenger Safety" onclick="playVideo('5X6Y7Z8W9V0U1T2S3')">Passenger Safety</button>
+  </div>
+
+  <iframe id="videoPlayer" src="" allowfullscreen></iframe>
+
+  <script>
+    function playVideo(fileId) {
+      const url = `https://drive.google.com/file/d/${fileId}/preview`;
+      document.getElementById('videoPlayer').src = url;
+    }
+
+    function filterButtons() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const buttons = document.querySelectorAll('.video-button');
+      buttons.forEach(btn => {
+        const title = btn.getAttribute('data-title').toLowerCase();
+        btn.style.display = title.includes(input) ? 'block' : 'none';
+      });
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+
+</body>
+</html>
