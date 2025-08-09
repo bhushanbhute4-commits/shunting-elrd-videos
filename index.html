@@ -1,168 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Railway Training Videos</title>
+  <meta charset="UTF-8">
+  <title>BHUSAWAL YARD SHUNTING E-LRD VIDEOS</title>
   <style>
     :root {
-      --primary: #005aa7;
-      --secondary: #00c6ff;
-      --bg: #f0f4f8;
-      --text: #333;
-      --btn-bg: #0078D7;
-      --btn-hover: #005fa3;
-    }
-
-    body.dark-mode {
-      --bg: #1e1e1e;
-      --text: #f0f0f0;
-      --btn-bg: #444;
-      --btn-hover: #666;
+      --bg-color: #f4f4f4;
+      --text-color: #000;
+      --button-bg: #0078D4;
+      --button-hover: #005A9E;
     }
 
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      transition: background 0.3s ease, color 0.3s ease;
+      padding: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
     }
 
     header {
-      background: linear-gradient(to right, var(--primary), var(--secondary));
-      color: white;
       padding: 20px;
-      text-align: center;
+      background-color: var(--button-bg);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
-    header h1 {
+    header h2 {
       margin: 0;
-      font-size: 2em;
+      font-size: 24px;
     }
 
     .controls {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 15px 20px;
-      background-color: var(--bg);
+      gap: 10px;
+      margin-top: 10px;
     }
 
-    .controls input {
-      padding: 10px;
+    .search-bar {
+      padding: 8px;
       font-size: 16px;
-      flex: 1;
-      margin-right: 10px;
+      border-radius: 5px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      width: 250px;
     }
 
     .toggle-btn {
-      background-color: var(--primary);
-      color: white;
+      padding: 8px 12px;
+      font-size: 14px;
+      background-color: white;
+      color: var(--button-bg);
+      border: 1px solid var(--button-bg);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .video-player-container {
+      max-width: 800px;
+      margin: 20px auto;
+      text-align: center;
+      display: none;
+    }
+
+    iframe {
+      width: 100%;
+      height: 450px;
       border: none;
-      padding: 10px 16px;
-      border-radius: 6px;
+      border-radius: 10px;
+      background: black;
+    }
+
+    .close-btn {
+      margin-top: 10px;
+      padding: 6px 12px;
+      font-size: 14px;
+      background-color: white;
+      color: var(--button-bg);
+      border: 1px solid var(--button-bg);
+      border-radius: 5px;
       cursor: pointer;
     }
 
     .index-container {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 20px;
       gap: 10px;
+      max-width: 600px;
+      margin: 20px auto;
     }
 
     .video-button {
-      background-color: var(--btn-bg);
+      padding: 10px;
+      font-size: 16px;
+      background-color: var(--button-bg);
       color: white;
       border: none;
-      padding: 12px 20px;
-      font-size: 16px;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
-      width: 100%;
-      max-width: 500px;
-      text-align: left;
-      transition: background-color 0.3s ease;
+      text-transform: uppercase;
     }
 
     .video-button:hover {
-      background-color: var(--btn-hover);
+      background-color: var(--button-hover);
     }
 
-    iframe {
-      display: block;
-      margin: 30px auto;
-      width: 90%;
-      max-width: 800px;
-      height: 450px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    @media (max-width: 600px) {
-      .controls {
-        flex-direction: column;
-      }
-
-      .controls input {
-        margin-bottom: 10px;
-        margin-right: 0;
-      }
-
-      .video-button {
-        font-size: 18px;
-      }
-
-      iframe {
-        height: 250px;
-      }
+    body.dark {
+      --bg-color: #121212;
+      --text-color: #f4f4f4;
+      --button-bg: #333;
+      --button-hover: #555;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>🚆 Railway Training Videos</h1>
+    <h2>📹 BHUSAWAL YARD SHUNTING E-LRD VIDEOS</h2>
+    <div class="controls">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Search videos..." oninput="filterVideos()">
+      <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </div>
   </header>
 
-  <div class="controls">
-    <input type="text" id="searchInput" placeholder="Search videos..." oninput="filterButtons()" />
-    <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <div class="video-player-container" id="videoContainer">
+    <iframe id="videoPlayer" src="" allowfullscreen></iframe>
+    <button class="close-btn" onclick="closeVideo()">Close</button>
   </div>
 
-  <div class="index-container" id="buttonContainer">
-    <!-- Replace these with your actual video titles and file IDs -->
-    <button class="video-button" data-title="FREIGHT SHED TO MOH" onclick="playVideo('1vy8pvHYNHcYDYfZhSAm4MWDq1JDNVI5P')">FREIGHT SHED TO MOH</button>
-    <button class="video-button" data-title="Signal Operations" onclick="playVideo('2X3Y4Z5W6V7U8T9S0')">Signal Operations</button>
-    <button class="video-button" data-title="Locomotive Maintenance" onclick="playVideo('3M4N5O6P7Q8R9S0T1')">Locomotive Maintenance</button>
-    <button class="video-button" data-title="Station Management" onclick="playVideo('4A5B6C7D8E9F0G1H2')">Station Management</button>
-    <button class="video-button" data-title="Passenger Safety" onclick="playVideo('5X6Y7Z8W9V0U1T2S3')">Passenger Safety</button>
+  <div class="index-container" id="videoList">
+    <button class="video-button" onclick="playVideo('1vy8pvHYNHcYDYfZhSAm4MWDq1JDNVI5P')">FREIGHT SHED TO MOH</button>
+    <button class="video-button" onclick="playVideo('1e1ECkB4MMN_cqreNDeLMXBZqgGkWeC1d')">MOH TO FREIGHT SHED</button>
+    <button class="video-button" onclick="playVideo('1hbqfwZykWhHvcL3juN710lk_SmYlkZOf')">FREIGHT SHED TO PASSENGER SHED</button>
+    <button class="video-button" onclick="playVideo('1NOLwSJeFRFe3Yv7PQ_k4FBwXS3nDs1wn')">PASSENGER SHED TO FREIGHT SHED</button>
+    <button class="video-button" onclick="playVideo('1QjPEtmVZNKP6pCa6Gs6EPRcZzQkNYJYv')">PASSENGER SHED TO MOH</button>
+    <button class="video-button" onclick="playVideo('1QV-tn8EEfR08FdQvSrZ7_j8Juzf5kdIO')">BYPASS LINE TO FREIGHT SHED</button>
+    <button class="video-button" onclick="playVideo('1HLkE9DIUpJltwGJbnhHPGzDezOxnYhNb')">SLI MOVEMENT</button>
+    <button class="video-button" onclick="playVideo('1Cvl43VSkUjtLJDw902Jv5ZE0vrnjrFg7')">UPRECEIVING YARD TO DEPARTURE YD VIA UPMARSHALLING</button>
+    <button class="video-button" onclick="playVideo('1YRhhhYf5Q_t9Gi-0d85DjtmqDpq-_uTf')">DN MARSHALLING TO DEPT</button>
+    <button class="video-button" onclick="playVideo('1xyXO5e8_rktv5V2u9DPMjtWQZXGMGxh9')">DN RECEIVING YD TO DN MARSHALLING YARD_VER4</button>
+    <button class="video-button" onclick="playVideo('1etiTlzIgzyShmsxBd5-SeVC-_sadGCxa')">UPMARSHALLING YARD TO DEPARTURE YARD RHS SIG</button>
+    <button class="video-button" onclick="playVideo('18V6bwM_bMFNte2qz19W8UUJT7tcPReVu')">FROM 616</button>
+    <button class="video-button" onclick="playVideo('1dupF-DhXSLH4RpGr3P7jD4hDfGcKO_uu')">DEPARTURE_TO_UPMARSHALLING</button>
+    <button class="video-button" onclick="playVideo('1D4VfVYMOkCMvjQwEfxvjATw7yLTPeA7w')">PS TO PF8 UP POWER ATTACH</button>
+    <button class="video-button" onclick="playVideo('1fod2SioRmnYCiTDBqVGbEfYn0YmCFGUJ')">PF01 TO PS VIA TANK SDG</button>
+    <button class="video-button" onclick="playVideo('1CHFM6oUCj8HyUQuG3ALSIlvORCip5rdt')">VIA OPEN LINE TO PS</button>
+    <button class="video-button" onclick="playVideo('1-TQgKTXAJHrhvvmPKJaebmBx1q6AdmLF')">MEMU MOVEMENT</button>
   </div>
-
-  <iframe id="videoPlayer" src="" allowfullscreen></iframe>
 
   <script>
     function playVideo(fileId) {
       const url = `https://drive.google.com/file/d/${fileId}/preview`;
-      document.getElementById('videoPlayer').src = url;
+      const player = document.getElementById('videoPlayer');
+      const container = document.getElementById('videoContainer');
+      player.src = url;
+      container.style.display = 'block';
+      window.scrollTo({ top: container.offsetTop - 20, behavior: 'smooth' });
     }
 
-    function filterButtons() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const buttons = document.querySelectorAll('.video-button');
-      buttons.forEach(btn => {
-        const title = btn.getAttribute('data-title').toLowerCase();
-        btn.style.display = title.includes(input) ? 'block' : 'none';
-      });
+    function closeVideo() {
+      const player = document.getElementById('videoPlayer');
+      const container = document.getElementById('videoContainer');
+      player.src = '';
+      container.style.display = 'none';
     }
 
     function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
+      document.body.classList.toggle('dark');
+    }
+
+    function filterVideos() {
+      const input = document.getElementById('searchInput').value.toUpperCase();
+      const buttons = document.querySelectorAll('.video-button');
+      buttons.forEach(btn => {
+        const text = btn.textContent || btn.innerText;
+        btn.style.display = text.includes(input) ? '' : 'none';
+      });
     }
   </script>
 
